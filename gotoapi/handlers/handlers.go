@@ -7,11 +7,7 @@ import (
 
 
 func HelloHandler(w http.ResponseWriter,req *http.Request){
-  if req.Method==http.MethodGet{
-    io.WriteString(w,"Hello World\n")
-  }else {
-    http.Error(w,"Invalid Method",http.StatusMethodNotAllowed)
-  }
+  io.WriteString(w,"Hello World\n")
 }
 func PostArticleHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Posting Article...\n")
@@ -23,7 +19,7 @@ func BestArticleHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Article No.1\n")
 }
 func NiceArticleHandler(w http.ResponseWriter,req *http.Request){
-  io.WriteString(w,"Posting Nicw...\n")
+  io.WriteString(w,"Posting Nice...\n")
 }
 func CommentArticleHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Posting Comment...\n")
