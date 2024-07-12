@@ -6,7 +6,7 @@ import (
   "github.com/shiv-ko/Go-tut/gotoapi/handlers"
 ) 
   func main(){
-    http.HandleFunc("/hello",handlers.helloHandler)
+    http.HandleFunc("/hello",handlers.HelloHandler)
     http.HandleFunc("/article",handlers.PostArticleHandler)
     http.HandleFunc("/article/list",handlers.ArticleListHandler)
     http.HandleFunc("/article/1",handlers.BestArticleHandler)
