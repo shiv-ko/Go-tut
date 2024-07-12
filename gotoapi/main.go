@@ -1,10 +1,9 @@
 package main 
 
 import ( 
-  "io" 
   "log"
   "net/http" 
-  "gotoapi/handlers"
+  "github.com/shiv-ko/Go-tut/gotoapi/handlers"
 ) 
   func main(){
     http.HandleFunc("/hello",handlers.helloHandler)

@@ -7,11 +7,7 @@ import (
 
 
 func HelloHandler(w http.ResponseWriter,req *http.Request){
-  if req.Method==http.MethodGet{
-    io.WriteString(w,"Hello World\n")
-  }else{
-    http.Error(w,"Invalid method",http.StatusMethodNotAllowed)
-  }
+  io.WriteString(w,"Hello World\n")
 }
 func PostArticleHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Posting Article...\n")
