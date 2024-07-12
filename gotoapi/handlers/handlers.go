@@ -15,8 +15,10 @@ func PostArticleHandler(w http.ResponseWriter,req *http.Request){
 func ArticleListHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Article List\n")
 }
-func BestArticleHandler(w http.ResponseWriter,req *http.Request){
-  io.WriteString(w,"Article No.1\n")
+func ArticleDetailHandler(w http.ResponseWriter,req *http.Request){
+  articleID:=1
+  resString:=fmt.Sprintf("Article No.%d\n",articleID)
+  io.WriteString(w,resString)
 }
 func NiceArticleHandler(w http.ResponseWriter,req *http.Request){
   io.WriteString(w,"Posting Nice...\n")
