@@ -1,19 +1,28 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/shiv-ko/go-tut/gotoapi/models"
 )
 
 func HelloHandler(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, "Hello World\n")
 }
 func PostArticleHandler(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "Posting Article...\n")
+	article := models.Article1
+	jsondData, err := json.Marshal(article)
+	if err != nil {
+		http.Error(w, "faild to encode json\n", http.StatusInternalServerError)
+		return
+	}
+	w.Write(jsonData)
+
 }
 func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 	queryMap := req.URL.Query()
