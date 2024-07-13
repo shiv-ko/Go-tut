@@ -21,7 +21,7 @@ var (
 	Article1 = Article{
 		ID:          1,
 		Title:       "first article",
-		Contents:    "This is the test article.",
+		Content:     "This is the test article.",
 		UserName:    "saki",
 		NiceNum:     1,
 		CommentList: []Comment{Comment1, Comment2},
@@ -31,7 +31,7 @@ var (
 	Article2 = Article{
 		ID:        1,
 		Title:     "second article",
-		Contents:  "This is the test article.",
+		Content:   "This is the test article.",
 		UserName:  "saki",
 		NiceNum:   2,
 		CreatedAt: time.Now(),
