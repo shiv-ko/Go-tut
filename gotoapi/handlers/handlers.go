@@ -16,7 +16,7 @@ func PostArticleHandler(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, "Posting Article...\n")
 }
 func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
-	queryMap := req.URL.query()
+	queryMap := req.URL.Query()
 	var page int
 
 	if p, ok := queryMap["page"]; ok && len(p) > 0 {
@@ -25,7 +25,7 @@ func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 		page, err = strconv.Atoi(p[0])
 		// not int
 		if err != nil {
-			http.Error(w, "Invald query parameter", http.StatusBadRequerst)
+			http.Error(w, "Invald query parameter", http.StatusBadRequest)
 			return
 		}
 
@@ -33,7 +33,8 @@ func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 		//クエリパラケータがないときに１に設定する
 		page = 1
 	}
-	io.WriteString(w, "Article List\n")
+	resString := fmt.Sprintf("Article List(page %d)\n", page)
+	io.WriteString(w, resString)
 }
 func ArticleDetailHandler(w http.ResponseWriter, req *http.Request) {
 	//varsはパスパラメタをMap形式で返す
