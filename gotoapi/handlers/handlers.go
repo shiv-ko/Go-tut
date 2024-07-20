@@ -50,7 +50,7 @@ func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 	// resString := fmt.Sprintf("Article List(page %d)\n", page)
 	// io.WriteString(w, resString)
 
-	articleList := []models.Article(models.Article1, models.Article2)
+	articleList := []models.Article{models.Article1, models.Article2}
 	jsonData, err := json.Marshal(articleList)
 	if err != nil {
 		errMSG := fmt.Sprintf("fail to encode json (page%d)\n", page)
@@ -71,7 +71,8 @@ func ArticleDetailHandler(w http.ResponseWriter, req *http.Request) {
 	article := models.Article1
 	jsonData, err := json.Marshal(article)
 	if err != nil {
-		http.Error(w, "faild to encode json\n", http.StatusInternalServerError)
+		errMsg := fmt.Sprintf("fail to encode json (articleID%d)\n", articleID)
+		http.Error(w, errMsg, http.StatusInternalServerError)
 		return
 	}
 	w.Write(jsonData)
