@@ -79,22 +79,20 @@ func ArticleDetailHandler(w http.ResponseWriter, req *http.Request) {
 
 // POST /article/nice
 func NiceArticleHandler(w http.ResponseWriter, req *http.Request) {
-	article := models.Article1
-	jsonData, err := json.Marshal(article)
-	if err != nil {
-		http.Error(w, "faild to encode json\n", http.StatusInternalServerError)
-		return
+	var reqArticle models.Article
+	if err := json.NewDecoder(req.Body).Decode(&reqArticle); err != nil {
+		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
-	w.Write(jsonData)
+	article := reqArticle
+	json.NewEncoder(w).Encode(article)
 }
 
 // POST /comment
 func CommentArticleHandler(w http.ResponseWriter, req *http.Request) {
-	comment := models.Comment1
-	jsonData, err := json.Marshal(comment)
-	if err != nil {
-		http.Error(w, "failed to encode json \n", http.StatusInternalServerError)
-		return
+	var reqComment models.Comment
+	if err := json.NewDecoder(req.Body).Decode(&reqComment); err != nil {
+		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
-	w.Write(jsonData)
+	comment := reqComment
+	json.NewEncoder(w).Encode(comment)
 }
