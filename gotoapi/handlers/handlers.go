@@ -3,11 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io"
 	"net/http"
 	"strconv"
-
-	"github.com/gorilla/mux"
 
 	"github.com/shiv-ko/Go-tut/gotoapi/models"
 )
@@ -19,7 +18,10 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 
 // POST /article
 func PostArticleHandler(w http.ResponseWriter, req *http.Request) {
+	// ストリームから取得し、デコード
+	// modelsからArticleの型を取得
 	var reqArticle models.Article
+	// req.BodyをreqArticleにデコード
 	if err := json.NewDecoder(req.Body).Decode(&reqArticle); err != nil {
 		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
@@ -31,12 +33,12 @@ func PostArticleHandler(w http.ResponseWriter, req *http.Request) {
 func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 	queryMap := req.URL.Query()
 	var page int
-
+	// クエリパラメータがあるかどうかを確認
 	if p, ok := queryMap["page"]; ok && len(p) > 0 {
 		var err error
-		// to int
+		// intに変換
 		page, err = strconv.Atoi(p[0])
-		// not int
+		// intに変換できない場合はエラーを返す
 		if err != nil {
 			http.Error(w, "Invald query parameter", http.StatusBadRequest)
 			return
@@ -61,12 +63,13 @@ func ArticleListHandler(w http.ResponseWriter, req *http.Request) {
 
 // GET /article/{id}
 func ArticleDetailHandler(w http.ResponseWriter, req *http.Request) {
+	//パスパラメータを取得
 	articleID, err := strconv.Atoi(mux.Vars(req)["id"])
 	if err != nil {
 		http.Error(w, "Invalid query parameter", http.StatusBadRequest)
 		return
 	}
-
+	// article1を取得・エンコード・レスポンスに書き込む
 	article := models.Article1
 	jsonData, err := json.Marshal(article)
 	if err != nil {
@@ -79,7 +82,9 @@ func ArticleDetailHandler(w http.ResponseWriter, req *http.Request) {
 
 // POST /article/nice
 func NiceArticleHandler(w http.ResponseWriter, req *http.Request) {
+	// modelsからArticleの型を取得
 	var reqArticle models.Article
+	// reqArticleをarticleにエンコード
 	if err := json.NewDecoder(req.Body).Decode(&reqArticle); err != nil {
 		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
@@ -89,7 +94,9 @@ func NiceArticleHandler(w http.ResponseWriter, req *http.Request) {
 
 // POST /comment
 func CommentArticleHandler(w http.ResponseWriter, req *http.Request) {
+	// modelsからArticleの型を取得
 	var reqComment models.Comment
+	// reqCommentをcommentにエンコード
 	if err := json.NewDecoder(req.Body).Decode(&reqComment); err != nil {
 		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
 	}
