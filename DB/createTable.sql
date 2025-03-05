@@ -1,4 +1,4 @@
--- TABLE FOR article
+-- 記事データを格納するテーブル
 CREATE TABLE IF NOT EXISTS articles (
   article_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS articles (
   created_at DATETIME
 );
 
--- TABLE FOR comment
+-- コメントデータを格納するテーブル
 CREATE TABLE IF NOT EXISTS comments (
   comment_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   article_id INT UNSIGNED NOT NULL,
