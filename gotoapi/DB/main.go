@@ -19,40 +19,59 @@ func main() {
 		fmt.Println(err)
 	}
 	defer db.Close()
-	articleID := 1
-	// SQL文を定義
+
+	// データを挿入する処理
+
+	//記事データ
+	article := models.Article{
+		Title:    "insert test",
+		Content:  "Can I insert data correctly?",
+		UserName: "saki",
+	}
+	//クエリ中に変数を用意
 	const sqlStr = `
-		select *
-		from articles
-		where article_id = ?;
-		`
-	// 実行したいSQL文を引数に指定すると実行結果としてもらえる
-	rows, err := db.Query(sqlStr, articleID)
+		insert into articles (title, contents, username, nice, created_at) 
+		values (?, ?, ?, 0, now());
+	`
+	//変数を埋め込む
+	result, err := db.Exec(sqlStr, article.Title, article.Content, article.UserName)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer rows.Close()
+	// 結果の確認
+	fmt.Println("記事ID")
+	fmt.Println(result.LastInsertId())
+	fmt.Println("影響を受けた行数")
+	fmt.Println(result.RowsAffected())
+	// articleID := 1
+	// // SQL文を定義
+	// const sqlStr = `
+	// 	select *
+	// 	from articles
+	// 	where article_id = ?;
+	// 	`
+	// // 実行したいSQL文を引数に指定すると実行結果としてもらえる
+	// row := db.QueryRow(sqlStr, articleID)
+	// if err := row.Err(); err != nil {
+	// 	//データ取得件数が0件だった場合はデータ読み出し処理に移らず終了
+	// 	fmt.Println(err)
+	// 	return
+	// }
 
-	// rowsからデータを読み出して構造体に格納する
-	articleArray := make([]models.Article, 0)
-	for rows.Next() {
-		//　記事データ（１行分）を格納する構造体を定義
-		var article models.Article
-		// Nullかもしれないデータを格納するための変数を定義
-		var createdTime sql.NullTime
-		// articleのフィールド内に取得したデータを入れる
-		err := rows.Scan(&article.ID, &article.Title, &article.Content, &article.UserName,
-			&article.NiceNum, &createdTime)
+	// var article models.Article
+	// var createdTime sql.NullTime
 
-		if createdTime.Valid {
-			article.CreatedAt = createdTime.Time
-		}
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			articleArray = append(articleArray, article)
-		}
-	}
-	fmt.Printf("%+v\n", articleArray)
+	// err = row.Scan(&article.ID, &article.Title, &article.Content,
+	// 	&article.UserName, &article.NiceNum, &createdTime)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
+
+	// if createdTime.Valid {
+	// 	article.CreatedAt = createdTime.Time
+	// }
+
+	// fmt.Printf("%+v\n", article)
 }
