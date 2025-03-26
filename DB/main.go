@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
+	// "dbsample/models"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/shiv-ko/Go-tut/gotoapi/DB/models"
 )
 
 func main() {
@@ -40,8 +40,9 @@ func main() {
 	//変数nicenumに現在のいいね数を格納
 	var nicenum int
 	err = row.Scan(&nicenum)
-	if err := row.Scan(&nicenum); err != nil {
+	if err != nil {
 		fmt.Println(err)
+		tx.Rollback()
 		return
 	}
 
